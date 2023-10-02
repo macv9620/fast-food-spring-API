@@ -19,4 +19,14 @@ public class OrderItemEntity {
 
     private Double quantity;
     private Double price;
+
+    @ManyToOne
+    @JoinColumn(name = "id_pizza", referencedColumnName = "id_pizza",
+            insertable = false, updatable = false)
+    private PizzaEntity pizza;
+
+    @ManyToOne
+    @JoinColumn(name = "id.id_order", referencedColumnName = "id_order",
+    insertable = false, updatable = false)
+    private OrderEntity order;
 }

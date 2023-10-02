@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -28,4 +30,5 @@ public class PizzaEntity {
 
     @Column(name = "available")
     private Boolean isAvailable;
+
 }
