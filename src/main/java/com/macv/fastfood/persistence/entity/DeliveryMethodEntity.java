@@ -4,14 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
 @Table(name = "delivery_method")
 public class DeliveryMethodEntity {
     @Id
@@ -22,4 +16,28 @@ public class DeliveryMethodEntity {
 
     @Column(name = "active")
     Boolean isActive;
+
+    public Character getMethodId() {
+        return methodId;
+    }
+
+    public void setMethodId(Character methodId) {
+        this.methodId = methodId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
 }

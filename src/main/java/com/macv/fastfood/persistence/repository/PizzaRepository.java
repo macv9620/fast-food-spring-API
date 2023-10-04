@@ -1,0 +1,8 @@
+package com.macv.fastfood.persistence.repository;
+
+import com.macv.fastfood.persistence.entity.PizzaEntity;
+import org.springframework.data.repository.ListCrudRepository;
+
+public interface PizzaRepository extends ListCrudRepository<PizzaEntity, Integer> {
+
+}

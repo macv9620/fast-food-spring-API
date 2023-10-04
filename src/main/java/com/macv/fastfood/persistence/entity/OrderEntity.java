@@ -1,17 +1,12 @@
 package com.macv.fastfood.persistence.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
 @Table(name = "pizza_order")
 public class OrderEntity {
     @Id
@@ -22,6 +17,7 @@ public class OrderEntity {
     @Column(name = "id_customer")
     private String customerId;
 
+    @CreationTimestamp
     @Column(name = "date")
     private LocalDateTime orderDate;
 
@@ -40,4 +36,68 @@ public class OrderEntity {
     @JoinColumn(name = "id_customer", referencedColumnName = "id_customer", insertable = false,
     updatable = false)
     private CustomerEntity customer;
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public Double getOrderTotal() {
+        return orderTotal;
+    }
+
+    public void setOrderTotal(Double orderTotal) {
+        this.orderTotal = orderTotal;
+    }
+
+    public String getMethodId() {
+        return methodId;
+    }
+
+    public void setMethodId(String methodId) {
+        this.methodId = methodId;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public List<OrderItemEntity> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItemEntity> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    public CustomerEntity getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerEntity customer) {
+        this.customer = customer;
+    }
 }
