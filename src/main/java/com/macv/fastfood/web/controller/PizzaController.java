@@ -5,11 +5,9 @@ import com.macv.fastfood.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -38,8 +36,15 @@ public class PizzaController {
 
         String message;
         HttpStatus httpStatus;
+        PizzaEntity data;
+        try {
+            data = pizzaService.getById(id);
+        } catch (Exception e){
+            message = e.getMessage();
+            data = null;
 
-        PizzaEntity data = pizzaService.getById(id);
+        }
+        data = pizzaService.getById(id);
 
         if (data == null){
             message = "Product not found";
@@ -57,4 +62,29 @@ public class PizzaController {
         return new ResponseEntity<>(responseWrapper, httpStatus);
         }
 
+    @PostMapping("/new")
+    public ResponseEntity<ResponseWrapper<?>> add(@RequestBody PizzaEntity pizzaEntity){
+
+        String message;
+        HttpStatus httpStatus;
+        PizzaEntity data;
+
+        try {
+            data = pizzaService.add(pizzaEntity);
+            message = "Product created successfully";
+            httpStatus = HttpStatus.CREATED;
+        } catch (Exception e){
+            message = e.getMessage();
+            data = null;
+            httpStatus = HttpStatus.BAD_REQUEST;
+        }
+
+        ResponseWrapper<PizzaEntity> responseWrapper = new ResponseWrapper<>(
+                message,
+                data
+        );
+
+        return new ResponseEntity<>(responseWrapper, httpStatus);
+
+        }
 }
