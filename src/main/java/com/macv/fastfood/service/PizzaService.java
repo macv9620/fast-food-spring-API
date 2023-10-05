@@ -27,7 +27,17 @@ public class PizzaService {
     }
 
     //Guardar pizza
-    public PizzaEntity add(PizzaEntity pizzaEntity) throws Exception {
-        return pizzaRepository.save(pizzaEntity);
+    public PizzaEntity add(PizzaEntity pizza) throws Exception {
+        return pizzaRepository.save(pizza);
+    }
+
+    //Validar si un registro ya existe
+    public boolean exists(int pizzaId){
+        return pizzaRepository.existsById(pizzaId);
+    }
+
+    //Eliminar un producto
+    public void deleteById(int pizzaId){
+        pizzaRepository.deleteById(pizzaId);
     }
 }
