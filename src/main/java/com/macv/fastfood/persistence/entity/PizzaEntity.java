@@ -2,6 +2,8 @@ package com.macv.fastfood.persistence.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "pizza")
 public class PizzaEntity {
@@ -25,9 +27,14 @@ public class PizzaEntity {
     @Column(name = "available")
     private Boolean isAvailable;
 
+    @OneToMany(mappedBy = "pizza")
+    private List<OrderItemEntity> orderItems;
+
     public Integer getPizzaId() {
         return pizzaId;
     }
+
+
 
     public void setPizzaId(Integer id_pizza) {
         this.pizzaId = id_pizza;

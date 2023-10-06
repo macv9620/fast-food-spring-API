@@ -40,4 +40,9 @@ public class PizzaService {
     public void deleteById(int pizzaId){
         pizzaRepository.deleteById(pizzaId);
     }
+
+    //Obtener listado de productos buscando una expresión en su nombre
+    public List<PizzaEntity> searchByNameExpression(String expression){
+        return pizzaRepository.findByNameContainingIgnoreCase(expression);
+    }
 }

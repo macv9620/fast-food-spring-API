@@ -1,9 +1,8 @@
 package com.macv.fastfood.persistence.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name="customer")
@@ -20,6 +19,9 @@ public class CustomerEntity {
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "customer")
+    private List<OrderEntity> orders;
 
     public String getCustomerId() {
         return customerId;

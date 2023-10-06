@@ -1,5 +1,6 @@
 package com.macv.fastfood.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -32,9 +33,11 @@ public class OrderEntity {
     @OneToMany(mappedBy = "order")
     private List<OrderItemEntity> orderItems;
 
-    @ManyToOne
-    @JoinColumn(name = "id_customer", referencedColumnName = "id_customer", insertable = false,
+    //Implementando Lazy
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_customer", insertable = false,
     updatable = false)
+    @JsonIgnore
     private CustomerEntity customer;
 
     public Integer getOrderId() {

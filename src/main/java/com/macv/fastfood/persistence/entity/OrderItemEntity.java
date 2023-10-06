@@ -1,5 +1,6 @@
 package com.macv.fastfood.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,14 +15,16 @@ public class OrderItemEntity {
     private Double quantity;
     private Double price;
 
-    @ManyToOne
-    @JoinColumn(name = "id_pizza", referencedColumnName = "id_pizza",
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_pizza",
             insertable = false, updatable = false)
+    @JsonIgnore
     private PizzaEntity pizza;
 
     @ManyToOne
-    @JoinColumn(name = "id.id_order", referencedColumnName = "id_order",
+    @JoinColumn(name = "id_order",
     insertable = false, updatable = false)
+    @JsonIgnore
     private OrderEntity order;
 
     public OrderItemPK getId() {

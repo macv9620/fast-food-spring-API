@@ -22,31 +22,31 @@ public class PizzaController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<ResponseWrapper<?>> getAll(){
+    public ResponseEntity<ResponseWrapper<?>> getAll() {
         List<PizzaEntity> data = pizzaService.getAll();
         ResponseWrapper<List<PizzaEntity>> responseWrapper = new ResponseWrapper<>(
                 data.size() + " products found",
                 data
         );
-      return ResponseEntity.ok(responseWrapper);
+        return ResponseEntity.ok(responseWrapper);
     }
 
     @GetMapping("/getById/{id}")
-    public ResponseEntity<ResponseWrapper<?>> getById(@PathVariable("id") Integer id){
+    public ResponseEntity<ResponseWrapper<?>> getById(@PathVariable("id") Integer id) {
 
         String message;
         HttpStatus httpStatus;
         PizzaEntity data;
         try {
             data = pizzaService.getById(id);
-        } catch (Exception e){
+        } catch (Exception e) {
             message = e.getMessage();
             data = null;
 
         }
         data = pizzaService.getById(id);
 
-        if (data == null){
+        if (data == null) {
             message = "Product not found";
             httpStatus = HttpStatus.NOT_FOUND;
         } else {
@@ -61,6 +61,7 @@ public class PizzaController {
 
         return new ResponseEntity<>(responseWrapper, httpStatus);
         }
+
 
     @PostMapping("/new")
     public ResponseEntity<ResponseWrapper<?>> add(@RequestBody PizzaEntity pizzaEntity){
@@ -159,4 +160,26 @@ public class PizzaController {
 
         return new ResponseEntity<>(responseWrapper, httpStatus);
     }
-}
+
+
+    @GetMapping("/getByExpression/{expression}")
+    public ResponseEntity<ResponseWrapper<?>> getByNameExpression (@PathVariable("expression") String expresion) {
+        String message;
+        HttpStatus httpStatus;
+        List<PizzaEntity> data = pizzaService.searchByNameExpression(expresion);
+
+        if (data == null) {
+            message = "0 products with expression: '" + expresion + "' found";
+            httpStatus = HttpStatus.BAD_REQUEST;
+        } else {
+            message = data.size() + " products with expression '" + expresion + "' found";
+            httpStatus = HttpStatus.OK;
+        }
+
+        ResponseWrapper<List<PizzaEntity>> responseWrapper = new ResponseWrapper<>(
+                message,
+                data
+        );
+
+        return new ResponseEntity<>(responseWrapper, httpStatus);
+    }}
