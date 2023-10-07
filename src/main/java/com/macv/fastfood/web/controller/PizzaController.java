@@ -3,6 +3,7 @@ package com.macv.fastfood.web.controller;
 import com.macv.fastfood.persistence.entity.PizzaEntity;
 import com.macv.fastfood.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -182,4 +183,25 @@ public class PizzaController {
         );
 
         return new ResponseEntity<>(responseWrapper, httpStatus);
-    }}
+    }
+
+    @GetMapping("/getOrderedPriceAsc")
+    public ResponseEntity<ResponseWrapper<?>> getPizzasOrderedAsc(){
+        List<PizzaEntity> data = pizzaService.getOrderedPizzasAsc();
+        String message = data.size() + " pizzas found";
+
+        ResponseWrapper<List<PizzaEntity>> responseWrapper = new ResponseWrapper<>(
+                message,
+                data
+        ) ;
+
+        return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
+    }
+
+    @GetMapping("/paginated")
+    public ResponseEntity<Page<PizzaEntity>> getPaginatedPizzas(@RequestParam(defaultValue = "0") int page,
+                                                                @RequestParam(defaultValue = "3") int elementsQuantity){
+        return new ResponseEntity<>(pizzaService.getPaginatedPizzas(page, elementsQuantity),HttpStatus.OK);
+    }
+
+}

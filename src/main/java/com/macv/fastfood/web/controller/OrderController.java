@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -51,4 +49,32 @@ public class OrderController {
 
 
     }
+
+    @GetMapping("/getTodayOrders")
+    public ResponseEntity<List<OrderEntity>> getTodayOrders(){
+        return new ResponseEntity<>(orderService.getTodayOrders(), HttpStatus.OK);
+    }
+
+    @PostMapping("/newOrder")
+    public ResponseEntity<ResponseWrapper<?>> postOrder(@RequestBody OrderEntity order){
+        String message;
+        OrderEntity data;
+        HttpStatus httpStatus;
+
+        try {
+            message = "Order created successfully";
+            data = orderService.save(order);
+            httpStatus = HttpStatus.CREATED;
+        } catch (Exception e){
+            message = e.getMessage();
+            data = null;
+            httpStatus = HttpStatus.BAD_REQUEST;
+        }
+        ResponseWrapper<OrderEntity> responseWrapper = new ResponseWrapper<>(
+                message,
+                data
+        );
+        return new ResponseEntity<>(responseWrapper, httpStatus);
+    }
+
 }
