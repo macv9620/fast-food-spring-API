@@ -1,6 +1,7 @@
 package com.macv.fastfood.web.controller;
 
 import com.macv.fastfood.persistence.entity.OrderEntity;
+import com.macv.fastfood.persistence.projection.OrderSummary;
 import com.macv.fastfood.persistence.repository.OrderRepository;
 import com.macv.fastfood.service.OrderService;
 import org.apache.catalina.filters.AddDefaultCharsetFilter;
@@ -75,6 +76,11 @@ public class OrderController {
                 data
         );
         return new ResponseEntity<>(responseWrapper, httpStatus);
+    }
+
+    @GetMapping("/getOrderSummaryById/{orderId}")
+    public ResponseEntity<OrderSummary> getOrderSummary(@PathVariable int orderId){
+        return new ResponseEntity<>(orderService.getOrderSummary(orderId), HttpStatus.OK);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.macv.fastfood.service;
 
 import com.macv.fastfood.persistence.entity.OrderEntity;
+import com.macv.fastfood.persistence.projection.OrderSummary;
 import com.macv.fastfood.persistence.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,9 @@ public class OrderService {
 
     public OrderEntity save(OrderEntity order){
         return orderRepository.save(order);
+    }
+
+    public OrderSummary getOrderSummary(int orderId){
+        return orderRepository.getOrderSummary(orderId);
     }
 }

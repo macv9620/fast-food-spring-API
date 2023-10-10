@@ -34,7 +34,7 @@ public class OrderEntity {
     private List<OrderItemEntity> orderItems;
 
     //Implementando Lazy
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_customer", insertable = false,
     updatable = false)
     @JsonIgnore
