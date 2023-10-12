@@ -2,6 +2,7 @@ package com.macv.fastfood.web.controller;
 
 import com.macv.fastfood.persistence.entity.PizzaEntity;
 import com.macv.fastfood.service.PizzaService;
+import com.macv.fastfood.service.dto.UpdatePizzaPriceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -203,5 +204,13 @@ public class PizzaController {
                                                                 @RequestParam(defaultValue = "3") int elementsQuantity){
         return new ResponseEntity<>(pizzaService.getPaginatedPizzas(page, elementsQuantity),HttpStatus.OK);
     }
+    
+    @PutMapping("/updatePrice")
+    public ResponseEntity<?> updatePrice(@RequestBody UpdatePizzaPriceDTO updatePizzaPriceDTO){
+            pizzaService.updatePrice(updatePizzaPriceDTO);
+            return new ResponseEntity<>("Price updated successfully", HttpStatus.OK);
+    }
+
+
 
 }

@@ -3,12 +3,15 @@ package com.macv.fastfood.service;
 import com.macv.fastfood.persistence.entity.PizzaEntity;
 import com.macv.fastfood.persistence.repository.PizzaPagSortRepository;
 import com.macv.fastfood.persistence.repository.PizzaRepository;
+import com.macv.fastfood.service.dto.UpdatePizzaPriceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -61,5 +64,15 @@ public class PizzaService {
     public Page<PizzaEntity> getPaginatedPizzas(int page, int elementsQuantity){
         Pageable pageable = PageRequest.of(page, elementsQuantity);
         return pizzaPagSortRepository.findAll(pageable);
+    }
+
+    @Transactional(noRollbackFor = EmailException.class)
+    public void updatePrice(UpdatePizzaPriceDTO updatePizzaPriceDTO){
+        pizzaRepository.updatePrice(updatePizzaPriceDTO);
+        sendEmail();
+    }
+
+    private void sendEmail(){
+        throw new EmailException();
     }
 }
